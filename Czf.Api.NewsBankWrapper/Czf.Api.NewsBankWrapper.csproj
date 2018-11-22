@@ -8,6 +8,12 @@
     <Description>wrapper for https://www.newsbank.com/</Description>
     <PackageTags>newsbank</PackageTags>
     <PackageReleaseNotes>1.0.0 first version MVP for searching and getting first result</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/czf/NewsBankWrapper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/czf/NewsBankWrapper</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\dev\solutions\NewsBankWrapper\Czf.Api.NewsBankWrapper\Czf.Api.NewsBankWrapper.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

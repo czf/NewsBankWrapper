@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Czf.Api.NewsBankWrapper</name>
+    </assembly>
+    <members>
+        <member name="M:Czf.Api.NewsBankWrapper.NewsBankClient.Search(Czf.Domain.NewsBankWrapper.Objects.SearchRequest)">
+            <summary>
+            Execute a search request
+            </summary>
+            <param name="searchRequest"></param>
+            <returns>the result object of the request</returns>
+        </member>
+    </members>
+</doc>

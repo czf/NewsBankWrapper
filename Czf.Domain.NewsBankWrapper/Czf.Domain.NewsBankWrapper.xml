@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Czf.Domain.NewsBankWrapper</name>
+    </assembly>
+    <members>
+        <member name="M:Czf.Domain.NewsBankWrapper.Interfaces.IEZProxySignInUriProvider.GetSignInUri">
+            <summary>
+            Returns the signin URI to use for POST username and password.
+            </summary>
+        </member>
+        <member name="P:Czf.Domain.NewsBankWrapper.Objects.SearchResult.FirstSearchResultItem">
+            <summary>
+            First result of the search response
+            </summary>
+        </member>
+        <member name="P:Czf.Domain.NewsBankWrapper.Objects.SearchResultItem.ResultItemUri">
+            <summary>absolute URL to the result</summary>
+        </member>
+        <member name="P:Czf.Domain.NewsBankWrapper.Objects.SearchResultItem.ItemText">
+            <summary>
+            Text used for the item uri
+            </summary>
+        </member>
+    </members>
+</doc>

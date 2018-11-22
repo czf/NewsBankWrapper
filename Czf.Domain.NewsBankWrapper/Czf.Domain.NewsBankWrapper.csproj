@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>czf</Authors>
+    <Company>czf</Company>
+    <Product>NewsBankWrapper</Product>
+    <Description>objects for use with Czf.Api.NewBankWrapper</Description>
+    <RepositoryUrl>https://github.com/czf/NewsBankWrapper</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/czf/NewsBankWrapper</PackageProjectUrl>
+    <PackageTags>newsbank</PackageTags>
+    <PackageReleaseNotes>all objects for MVP 1.0.0.  
+Note: This may have been mistakenly made into a sperate project and maybe rolled into one project so that only one nuget package is needed.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\dev\solutions\NewsBankWrapper\Czf.Domain.NewsBankWrapper\Czf.Domain.NewsBankWrapper.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

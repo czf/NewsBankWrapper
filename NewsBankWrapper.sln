@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Czf.Api.NewsBankWrapper", "Czf.Api.NewsBankWrapper\Czf.Api.NewsBankWrapper.csproj", "{24CE2ABD-C417-48E5-9D3E-73618D62FEB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Czf.Test.Api.NewsBankWrapper", "Czf.Test.Api.NewsBankWrapper\Czf.Test.Api.NewsBankWrapper.csproj", "{4195E7DE-D25F-4878-9E35-2E9A8DBBFB2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Czf.Domain.NewsBankWrapper", "Czf.Domain.NewsBankWrapper\Czf.Domain.NewsBankWrapper.csproj", "{1554B349-61AB-4F5B-ADEE-9DA1C4F9D4DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{24CE2ABD-C417-48E5-9D3E-73618D62FEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24CE2ABD-C417-48E5-9D3E-73618D62FEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24CE2ABD-C417-48E5-9D3E-73618D62FEB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4195E7DE-D25F-4878-9E35-2E9A8DBBFB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4195E7DE-D25F-4878-9E35-2E9A8DBBFB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4195E7DE-D25F-4878-9E35-2E9A8DBBFB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4195E7DE-D25F-4878-9E35-2E9A8DBBFB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1554B349-61AB-4F5B-ADEE-9DA1C4F9D4DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1554B349-61AB-4F5B-ADEE-9DA1C4F9D4DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1554B349-61AB-4F5B-ADEE-9DA1C4F9D4DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1554B349-61AB-4F5B-ADEE-9DA1C4F9D4DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

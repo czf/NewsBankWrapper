@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>czf</Authors>
+    <Product>NewsBankWrapper</Product>
+    <Description>wrapper for https://www.newsbank.com/</Description>
+    <PackageTags>newsbank</PackageTags>
+    <PackageReleaseNotes>1.0.0 first version MVP for searching and getting first result</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Czf.Domain.NewsBankWrapper\Czf.Domain.NewsBankWrapper.csproj" />
+  </ItemGroup>
 
 </Project>

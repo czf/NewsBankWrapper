@@ -8,7 +8,7 @@ namespace Czf.Domain.NewsBankWrapper.Enum
     public enum Publication
     {
         None,
-        [Description("STWES!Seattle+Times,+The:+Web+Edition+Articles+(WA)")]
+        [Description("STWES!Seattle Times, The: Web Edition Articles (WA)")]
         SeattleTimesWebEditionArticles
     }
 }

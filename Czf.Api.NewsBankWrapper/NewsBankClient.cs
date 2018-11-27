@@ -21,7 +21,7 @@ namespace Czf.Api.NewsBankWrapper
 {
     public class NewsBankClient
     {
-        private const string SEARCH_PATH = "apps/news/results/";
+        private const string SEARCH_PATH = "apps/news/results";
         private const string LOGIN_FORM_PARAMETER = "user";
         private const string PASSWORD_FORM_PARAMETER = "pass";
         private IEZProxySignInUriProvider _eZProxySignInUri;
@@ -32,7 +32,7 @@ namespace Czf.Api.NewsBankWrapper
         private bool _hasSignedIn;
 
 
-        private static readonly HttpClientHandler _httpClientHandler;
+        private HttpClientHandler _httpClientHandler;
 
         public NewsBankClient(IEZProxySignInUriProvider signInUrlProvider, 
             IEZProxySignInCredentialsProvider credentialsProvider,
@@ -43,10 +43,8 @@ namespace Czf.Api.NewsBankWrapper
             _eZProxySignInUri = signInUrlProvider;
             _eZProxyCredentialsProvider = credentialsProvider;
             _productBaseUriProvider = baseUriProvider;
-            _httpClient = new HttpClient(new HttpClientHandler()
-            {
-                CookieContainer = new CookieContainer()
-            });
+            _httpClientHandler = new HttpClientHandler() { CookieContainer = new CookieContainer()};
+            _httpClient = new HttpClient(_httpClientHandler);
             _log = log;
         }
 
@@ -59,15 +57,34 @@ namespace Czf.Api.NewsBankWrapper
         public async Task<SearchResult> Search(SearchRequest searchRequest)
         {
             if (!_hasSignedIn) { await SignIn(); }
-            if(!_hasSignedIn) { throw new AuthenticationException("SignIn did not succeed."); }
+            if (!_hasSignedIn) { throw new AuthenticationException("SignIn did not succeed."); }
 
             SearchResult result = null;
             Uri searchRequestUri = GenerateSearchRequestURI(searchRequest);
-            using (HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(searchRequestUri))
+            int tries = 3;
+            bool success = false;
+            do
             {
-                
-                result = new SearchResult(httpResponseMessage);
-            }
+                tries--;
+
+                using (HttpResponseMessage httpResponseMessage = await _httpClient.GetAsync(searchRequestUri))
+                {
+                    if (httpResponseMessage.StatusCode == HttpStatusCode.OK
+                        &&
+                       httpResponseMessage.RequestMessage.RequestUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.Unescaped) == searchRequestUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.Unescaped))
+                    {
+                        result = new SearchResult(httpResponseMessage);
+                        success = true;
+                    }
+                    else if (httpResponseMessage.RequestMessage.RequestUri.Query.Contains(searchRequestUri.GetComponents(UriComponents.PathAndQuery, UriFormat.UriEscaped))) //redirected to signin
+                    {
+                        _log.Info("search was redirected to signin, will attempt to signin.");
+                        await SignIn();
+                        if (!_hasSignedIn) { throw new AuthenticationException("SignIn did not succeed."); }
+                    }
+                }
+            } while (tries > 0 && !success);
+
             return result;
         }
 
@@ -75,7 +92,6 @@ namespace Czf.Api.NewsBankWrapper
         {
             try
             {
-                _httpClientHandler.CookieContainer = new CookieContainer();
                 Dictionary<string, string> login = new Dictionary<string, string>()
                 {
                     { LOGIN_FORM_PARAMETER, _eZProxyCredentialsProvider.GetAccount()},
@@ -113,12 +129,12 @@ namespace Czf.Api.NewsBankWrapper
             path.Append($"{_productBaseUriProvider.GetProductBaseUri()}{SEARCH_PATH}");
 
 
-            path.Append($"?p={Uri.EscapeUriString(searchRequest.Product.GetDescription())}");
+            path.Append($"?p={Uri.EscapeDataString(searchRequest.Product.GetDescription())}");
             if (searchRequest.Publications?.Count > 0)
             {
-                path.Append($"&t=pubname:{ Uri.EscapeUriString(searchRequest.Publications.Select(x => x.GetDescription()).Aggregate((a, b) => a + b))}");//  is any thing supposed to be between entries?
+                path.Append($"&t=pubname:{ Uri.EscapeDataString(searchRequest.Publications.Select(x => x.GetDescription()).Aggregate((a, b) => a + b))}");//  is any thing supposed to be between entries?
             }
-            path.Append($"&sort={Uri.EscapeUriString(searchRequest.SortOrder.GetDescription())}");
+            path.Append($"&sort={Uri.EscapeDataString(searchRequest.SortOrder.GetDescription())}");
             path.Append($"&maxresults=20");
             path.Append("&f=advanced");
             #region parameters
@@ -168,7 +184,7 @@ namespace Czf.Api.NewsBankWrapper
 
         private string FormatParameter(SearchParameter searchParameter, int index)
         {
-            return $"val-base-{index}={Uri.EscapeUriString(searchParameter.Value)}&fld-base-{index}={Uri.EscapeUriString(searchParameter.Field.GetDescription())}&bln-base-{index}={Uri.EscapeUriString(searchParameter.ParameterCompoundOperator.GetDescription())}";
+            return $"val-base-{index}={Uri.EscapeDataString(searchParameter.Value)}&fld-base-{index}={Uri.EscapeDataString(searchParameter.Field.GetDescription())}&bln-base-{index}={Uri.EscapeDataString(searchParameter.ParameterCompoundOperator.GetDescription())}";
         }
     }
 }

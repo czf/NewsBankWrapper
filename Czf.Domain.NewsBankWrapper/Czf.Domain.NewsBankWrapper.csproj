@@ -12,13 +12,24 @@
     <PackageReleaseNotes>all objects for MVP 1.0.0.  
 Note: This may have been mistakenly made into a sperate project and maybe rolled into one project so that only one nuget package is needed.</PackageReleaseNotes>
   </PropertyGroup>
+	<PropertyGroup>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<SignAssembly>false</SignAssembly>
+		<Version>1.0.1</Version>
+
+	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\dev\solutions\NewsBankWrapper\Czf.Domain.NewsBankWrapper\Czf.Domain.NewsBankWrapper.xml</DocumentationFile>
+    <DocumentationFile>C:\dev\solutions\NewsBankWrapper\Czf.Domain.NewsBankWrapper\Czf.Domain.NewsBankWrapper.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.8.10" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.22" />
   </ItemGroup>
 
 </Project>

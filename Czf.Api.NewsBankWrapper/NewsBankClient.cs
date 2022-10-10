@@ -17,6 +17,7 @@ using System.Web;
 using System.Collections.Specialized;
 
 [assembly: InternalsVisibleTo("Czf.Test.Api.NewsBankWrapper")]
+[assembly: InternalsVisibleTo("Czf.Test.Api.NewsBankWrapper.Net6")]
 namespace Czf.Api.NewsBankWrapper
 {
     public class NewsBankClient

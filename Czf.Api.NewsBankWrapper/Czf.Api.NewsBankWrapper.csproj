@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\dev\solutions\NewsBankWrapper\Czf.Api.NewsBankWrapper\Czf.Api.NewsBankWrapper.xml</DocumentationFile>
+    <DocumentationFile>C:\dev\solutions\NewsBankWrapper\Czf.Api.NewsBankWrapper\Czf.Api.NewsBankWrapper.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

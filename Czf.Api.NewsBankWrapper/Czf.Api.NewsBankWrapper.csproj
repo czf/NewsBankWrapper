@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,11 +7,11 @@
     <Product>NewsBankWrapper</Product>
     <Description>wrapper for https://www.newsbank.com/</Description>
     <PackageTags>newsbank</PackageTags>
-    <PackageReleaseNotes>1.0.2 attempts to signin again after 5 hours.</PackageReleaseNotes>
+    <PackageReleaseNotes>1.0.3 attempts to signin again after 5 hours.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/czf/NewsBankWrapper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/czf/NewsBankWrapper</RepositoryUrl>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

@@ -15,6 +15,7 @@ using System.Security.Authentication;
 using System.Runtime.CompilerServices;
 using System.Web;
 using System.Collections.Specialized;
+using System.Threading;
 
 [assembly: InternalsVisibleTo("Czf.Test.Api.NewsBankWrapper")]
 [assembly: InternalsVisibleTo("Czf.Test.Api.NewsBankWrapper.Net6")]
@@ -31,6 +32,8 @@ namespace Czf.Api.NewsBankWrapper
         private HttpClient _httpClient;
         private ICanLog _log;
         private bool _hasSignedIn;
+        private DateTimeOffset _lastSignInDateTime = DateTimeOffset.MinValue;
+        private SemaphoreSlim _signinSemaphor = new SemaphoreSlim(1);
 
 
         private HttpClientHandler _httpClientHandler;
@@ -57,7 +60,22 @@ namespace Czf.Api.NewsBankWrapper
         /// <returns>the result object of the request</returns>
         public async Task<SearchResult> Search(SearchRequest searchRequest)
         {
-            if (!_hasSignedIn) { await SignIn(); }
+            await _signinSemaphor.WaitAsync();
+            try
+            {
+                if (!_hasSignedIn ||
+                    DateTimeOffset.Now.Subtract(TimeSpan.FromHours(5)) > _lastSignInDateTime)
+                {
+                    if (await SignIn())
+                    {
+                        _lastSignInDateTime = DateTimeOffset.Now;
+                    }
+                }
+            }
+            finally
+            {
+                _signinSemaphor.Release();
+            }
             if (!_hasSignedIn) { throw new AuthenticationException("SignIn did not succeed."); }
 
             SearchResult result = null;
@@ -80,7 +98,18 @@ namespace Czf.Api.NewsBankWrapper
                     else if (httpResponseMessage.RequestMessage.RequestUri.Query.Contains(searchRequestUri.GetComponents(UriComponents.PathAndQuery, UriFormat.UriEscaped))) //redirected to signin
                     {
                         _log.Info("search was redirected to signin, will attempt to signin.");
-                        await SignIn();
+                        await _signinSemaphor.WaitAsync();
+                        try
+                        {
+                            if (await SignIn())
+                            {
+                                _lastSignInDateTime = DateTimeOffset.Now;
+                            }
+                        }
+                        finally
+                        {
+                            _signinSemaphor.Release();
+                        }
                         if (!_hasSignedIn) { throw new AuthenticationException("SignIn did not succeed."); }
                     }
                 }
@@ -106,7 +135,7 @@ namespace Czf.Api.NewsBankWrapper
 
                     if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
                     {
-                        _log.Error($"Status code did not return 200: {httpResponseMessage.StatusCode} {httpResponseMessage.ReasonPhrase}");
+                        _log.Error($"SignIn status code did not return 200: {httpResponseMessage.StatusCode} {httpResponseMessage.ReasonPhrase}");
                     }
                     else
                     {

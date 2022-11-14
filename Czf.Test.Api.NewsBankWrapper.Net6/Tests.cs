@@ -21,18 +21,19 @@ namespace Czf.Test.Api.NewsBankWrapper.Net6
         [TestMethod]
         public void TestMethodSeach()
         {
+            string expectedText = "Before all else, Seattle police recruits study the people they'll serve";//"More stores closing on Thanksgiving as online shopping booms; here's what's open, closed in the Seattle area - American consumers are expected to spend about $720 billion on holiday shopping this year, an annual increase of more than 4 percent, according to the National Retail Federation.";
+
             NewsBankClient client = new NewsBankClient(new urlprovider(), new credProvider(), new baseurlprovider(), new log());
             SearchRequest request = new SearchRequest()
             {
                 Publications = new List<Publication>() { Publication.SeattleTimesWebEditionArticles },
                 SearchParameter0  = new SearchParameter() { Field = SearchField.Author, Value = "Sara Jean Green" },
-                SearchParameter1 = new SearchParameter() { Field = SearchField.Headline, Value = "Before all else, Seattle police recruits study the people they’ll serve" },
+                SearchParameter1 = new SearchParameter() { Field = SearchField.Headline, Value =  expectedText},
                 SearchParameter2 = new SearchParameter() { Field = SearchField.Date, Value = "10/04/2022" }
                 
             };
             SearchResult searchResult = client.Search(request).Result;
-            string expectedText = "More stores closing on Thanksgiving as online shopping booms; here's what's open, closed in the Seattle area - American consumers are expected to spend about $720 billion on holiday shopping this year, an annual increase of more than 4 percent, according to the National Retail Federation.";
-            Uri expectedUri = new Uri("https://infoweb-newsbank-com.ezproxy.spl.org/apps/news/document-view?p=WORLDNEWS&docref=news/16FCFBD6F00BE188");
+            Uri expectedUri = new Uri("https://infoweb-newsbank-com.ezproxy.spl.org/apps/news/document-view?p=WORLDNEWS&docref=news/18CF494B0D441E40");
             Assert.IsNotNull(searchResult);
             Assert.IsNotNull(searchResult.FirstSearchResultItem);
             Assert.IsNotNull(searchResult.FirstSearchResultItem.ItemText);
